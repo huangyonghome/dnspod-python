@@ -53,12 +53,6 @@ class Domain():
             self.status = None
             self.grade_title = None
 
-
-
-
-
-
-
     # 创建个域名绑定
     def domain_create(self):
         '''
@@ -78,14 +72,6 @@ class Domain():
         self.response = submit("Domain.Status",**self.params)
 
 
-
-
 if __name__ == '__main__':
 
-    domain = Domain(domain="haoshiqi.haha")
-    # domain.domain_list()
-    # print(domain.domain_id)
-    # domain.domain_create()
-    # domain.domain_info()
-    # print(domain.domain_id)
-    domain.domain_info()
+    pass

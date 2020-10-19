@@ -13,6 +13,7 @@ class HandleDomain(Domain):
         super().__init__()
 
 
+    # 获取域名的装饰器函数
     def get_domain(f):
         def inner(self,*args,**kwargs):
             self.domain = input("请先指定需要操作的域名:>>>").strip()

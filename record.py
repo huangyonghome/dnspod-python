@@ -29,7 +29,7 @@ class Record():
     record_line: 解析线路,默认为中文"默认"
     '''
     def __init__(self,ttl=600,domain=None,record_id=None,value=None,status="enable",sub_domain=None,record_type="@",mx=None,record_line="默认"):
-        self.domain = domain
+        self.domain = domain             #域名名称
         self.record_id = record_id       #解析记录id
         self.value = value               #解析值
         self.status = status             #解析记录状态
@@ -38,6 +38,9 @@ class Record():
         self.mx = mx                     #优先级
         self.record_line = record_line   #线路类型
         self.ttl = ttl   #缓存时间
+
+        #提交参数
+        self.params = {}
 
     def list_record(self):
         '''
@@ -63,7 +66,6 @@ class Record():
             self.response = submit("Domain.Info", domain=self.domain)
 
 
-
     def is_record_exists(self):
         '''
         检查要配置的子域名是否已经存在解析记录.如果存在,则保存解析记录的子域名,解析类型和值.
@@ -80,7 +82,8 @@ class Record():
         if self.record_list:
             for item in self.record_list:
                 if item.get("name") == self.sub_domain:
-                    record_dict = dict(sub_domain=item.get("name"),record_id=item.get("id"),record_type=item.get('type'), record_value=item.get('value'),status=item.get('status'))
+                    record_dict = dict(sub_domain=item.get("name"),record_id=item.get("id"),record_type=item.get('type'),
+                                       record_value=item.get('value'),status=item.get('status'))
                     self.sub_domain_record_list.append(record_dict)
 
     def record_modify(self):
