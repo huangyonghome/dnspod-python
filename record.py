@@ -81,7 +81,8 @@ class Record():
 
         if self.record_list:
             for item in self.record_list:
-                if item.get("name") == self.sub_domain:
+                # 使用in判断,不要求精确匹配
+                if self.sub_domain in item.get("name"):
                     record_dict = dict(sub_domain=item.get("name"),record_id=item.get("id"),record_type=item.get('type'),
                                        record_value=item.get('value'),status=item.get('status'))
                     self.sub_domain_record_list.append(record_dict)

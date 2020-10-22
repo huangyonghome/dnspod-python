@@ -212,7 +212,7 @@ class HandleRecord(Record):
         # 检查是否存在子域名的解析记录
         self.is_record_exists()
         if self.sub_domain_record_list:
-            print("以下是该子域名:{},DNS解析记录部分信息:".format(self.sub_domain), sep="\n")
+            print("以下是该子域名:{}相关的DNS解析记录部分信息:".format(self.sub_domain), sep="\n")
             for index,item in enumerate(self.sub_domain_record_list):
                 print(index,":",item)
 
