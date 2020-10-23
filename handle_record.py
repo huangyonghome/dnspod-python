@@ -176,6 +176,8 @@ class HandleRecord(Record):
         # 获取DNS解析记录的信息,包含记录id和解析记录状态
         if choise is not None:
             self.record_info = self.sub_domain_record_list[choise]
+            # 获取精确的sub_domain.
+            self.sub_domain = self.record_info.get("sub_domain")
 
             #交互式确认
             print("DNS解析条目的修改或删除会立即影响该DNS条目的解析,请谨慎操作.")
