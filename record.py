@@ -47,12 +47,28 @@ class Record():
         获取某个域名下的解析记录列表
         :return:
         '''
-        # 调用self.response参数获取域名列表
-        self.response = submit("Record.List",domain=self.domain)
-        if self.response.get("status", {}).get("code") == "1":
-            self.record_list = self.response.get("records")
-        else:
-            self.record_list = None
+        self.record_list = []
+
+        #每页搜索条目数量,单页搜索结果最大100个
+        length = 20
+
+        #偏移量,也就是分页量
+        offset = 0
+
+        #循环搜索域名下的所有解析记录列表,如果解析记录数量较多,需要分页循环搜索
+        while True:
+            # 调用self.response参数获取域名列表
+            self.response = submit("Record.List",domain=self.domain,length=length,offset=offset)
+            if self.response.get("status", {}).get("code") == "1":
+                res = self.response.get("records")
+                #将多次搜索到的解析条目合并到self.record_list列表中
+                self.record_list = self.record_list + res
+
+                #偏移量增加,比如第一次从0开始搜索,搜索20页,则第二次从20偏移量开始搜索..所以下一次的offset就是当前的offset和length2个参数的和
+                offset += length
+
+            else:
+                break
 
 
     def is_domain_avaliable(self):
@@ -80,7 +96,9 @@ class Record():
         self.list_record()
 
         if self.record_list:
+
             for item in self.record_list:
+                # print(item.get('name'))
                 # 使用in判断,不要求精确匹配
                 if self.sub_domain in item.get("name"):
                     record_dict = dict(sub_domain=item.get("name"),record_id=item.get("id"),record_type=item.get('type'),
@@ -165,7 +183,5 @@ class Record():
 
 
 if __name__ == '__main__':
-    record_ins = Record(domain='iqg.pub')
-    record_ins.is_domain_avaliable()
-    print(record_ins.response)
-    # print(record_ins.record_list)
+    record_ins = Record(domain='doweidu.com')
+    record_ins.list_record()
